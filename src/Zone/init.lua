@@ -871,16 +871,24 @@ function Zone:destroy()
 end
 Zone.Destroy = Zone.destroy
 
-export type EnumInstance = {
-    [string]: number,
-
-    getName: (valueOrProperty: any) -> string?,
-    getValue: (nameOrProperty: any) -> number?,
-    getProperty: (nameOrValue: any) -> any?,
-}
+export type EnumInstance = number
 
 export type ZoneSignal<T...> = {
     Connect: (self: ZoneSignal<T...>, callback: (T...) -> ()) -> ()
+}
+
+export type Enumerators = {
+	Detection:{
+		WholeBody:EnumInstance;
+		Centre:EnumInstance
+	};
+
+	Accuracy:{
+		Low:EnumInstance;
+		Medium:EnumInstance;
+		High:EnumInstance;
+		Precise:EnumInstance
+	}
 }
 
 export type Zone = {
@@ -899,7 +907,8 @@ export type Zone = {
 	autoUpdate:boolean;
 	respectUpdateQueue:boolean;
 	zoneParts:{BasePart};
-	
+	enum:Enumerators;
+
 
 	findLocalPlayer:(self:Zone) -> boolean;
 	findPlayer:(self:Zone, Player:Player) -> boolean;
@@ -926,19 +935,7 @@ export type ZonePlus = {
 	new:(container:Instance) -> Zone;
 	fromRegion:(CFrame:CFrame, Size:Vector3) -> Zone;
 
-	enum:{
-		Detection:{
-			WholeBody:EnumInstance;
-			Centre:EnumInstance
-		};
-
-		Accuracy:{
-			Low:EnumInstance;
-			Medium:EnumInstance;
-			High:EnumInstance;
-			Precise:EnumInstance
-		}
-	}
+	enum:Enumerators
 }
 
 return Zone::ZonePlus
